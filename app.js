@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const Note = require("./models/notes.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/noteman";
 
@@ -30,8 +31,9 @@ app.get("/",(req,res)=>{
 });
 
 //Index Route
-app.get("/notes/index",(req,res)=>{
-    res.render("notes/index.ejs");
+app.get("/notes/index",async(req,res)=>{
+    const allNotes = await Note.find({});
+    res.render("notes/index.ejs",{allNotes});
 });
 
 //Login Route
